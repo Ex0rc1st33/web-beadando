@@ -1,17 +1,16 @@
 package com.todolist.user.service;
 
+import com.todolist.user.model.UserResponseDto;
 import com.todolist.user.persistence.entity.User;
-
-import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
 
-    String signin(String username, String password);
+    String signIn(String username, String password);
 
-    String signup(User user);
+    String signUp(User user);
 
-    User whoami(HttpServletRequest req);
+    UserResponseDto whoAmI(String username);
 
-    String refresh(String username);
+    String signOut();
 
 }

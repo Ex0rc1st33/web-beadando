@@ -26,11 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
         http.authorizeRequests()
-                .antMatchers("/login", "/home", "/static/**", "/*.js", "/*.json", "/*.ico", "/css/**", "/api/**").permitAll()
-                .antMatchers("http://localhost:3000/login").permitAll()
+                .antMatchers("/login", "/register", "/static/**", "/*.js", "/*.json", "/*.ico", "/css/**", "/api/**").permitAll()
                 .anyRequest().authenticated();
+        http.formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home", true);
+        http.logout().logoutSuccessUrl("/login");
         http.exceptionHandling().accessDeniedPage("/login");
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
     }

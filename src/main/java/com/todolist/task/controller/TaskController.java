@@ -6,6 +6,8 @@ import com.todolist.task.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 public class TaskController {
 
@@ -16,12 +18,13 @@ public class TaskController {
     }
 
     @PostMapping("/api/create")
-    public ResponseEntity<?> createTask(@RequestBody FormData formData) {
+    public ResponseEntity<?> createTask(@RequestBody FormData formData) throws IOException {
         TaskDto taskDto = TaskDto.builder()
                 .title(formData.getTitle())
                 .description(formData.getDescription())
                 .creationDate(null)
                 .isDone(false)
+                .username(formData.getUsername())
                 .build();
         return ResponseEntity.ok(taskService.createTask(taskDto));
     }
@@ -32,20 +35,20 @@ public class TaskController {
     }
 
     @PostMapping("/api/delete")
-    public ResponseEntity<?> deleteTask(@RequestBody String id) {
-        taskService.deleteTask(Long.parseLong(id.substring(0, id.length() - 1)));
+    public ResponseEntity<?> deleteTaskByUser(@RequestBody TaskDto taskDto) {
+        taskService.deleteTaskByUser(taskDto);
         return ResponseEntity.ok("Task deleted");
     }
 
-    @GetMapping("/api/list")
-    public ResponseEntity<?> listTasks() {
-        return ResponseEntity.ok(taskService.getTasks());
+    @PostMapping("/api/delete_all")
+    public ResponseEntity<?> deleteAllTasksByUser(@RequestBody String username) {
+        taskService.deleteAllTasksByUser(username.substring(0, username.length() - 1));
+        return ResponseEntity.ok("Tasks deleted");
     }
 
-    @PostMapping("/api/delete_all")
-    public ResponseEntity<?> deleteAllTasks() {
-        taskService.deleteAllTasks();
-        return ResponseEntity.ok("Tasks deleted");
+    @PostMapping("/api/list")
+    public ResponseEntity<?> listTasksByUser(@RequestBody String username) {
+        return ResponseEntity.ok(taskService.getTasksByUser(username.substring(0, username.length() - 1)));
     }
 
 }

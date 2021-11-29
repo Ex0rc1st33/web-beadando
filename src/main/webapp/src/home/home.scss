@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+
+body {
+  background: rgb(238, 174, 202);
+  background: linear-gradient(90deg, rgba(238, 174, 202, 1) 0%, rgba(156, 148, 233, 1) 99%);
+  font-family: "Nunito", serif;
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5em;
+  font-size: 1.5em;
+}
+
+.home {
+
+  table {
+    margin: 3em 3em 2em 3em;
+    padding: 0 1em 0.5em 0.7em;
+    background: rgba(220, 216, 243, 0.65);
+    border-radius: 15px 15px 15px 15px;
+    -webkit-box-shadow: 5px -3px 17px 5px rgba(0, 0, 0, 0.83);
+    box-shadow: 5px -3px 17px 5px rgba(0, 0, 0, 0.83);
+    min-width: 30em;
+    max-width: 50em;
+    min-height: 5em;
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+  }
+
+  table thead tr:first-child th {
+    text-align: left;
+    font-size: 1.1em;
+    font-variant: small-caps;
+  }
+
+  table thead tr:last-child th {
+    text-align: left;
+    font-weight: normal;
+  }
+
+  table thead th {
+    padding: 0 0.55em;
+  }
+
+  table tr {
+    vertical-align: top;
+  }
+
+  table tr td:first-child {
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+  }
+
+  table tr td:last-of-type {
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+  }
+
+  table td {
+    max-width: 25em;
+    overflow-wrap: break-word;
+    padding: 0.55em;
+  }
+
+  table tbody th {
+    padding: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  table tbody td:first-child {
+    font-style: italic;
+  }
+
+  .uncompleted tbody td {
+    background-color: rgb(235, 235, 235);
+    opacity: 0.8;
+  }
+
+  .completed tbody td {
+    background-color: rgb(97, 97, 97);
+    color: rgb(235, 235, 235);
+    opacity: 0.8;
+  }
+
+  #home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input {
+    margin-left: 2em;
+    padding: 0.2em 0.5em;
+    height: 2em;
+    min-width: 20em;
+    -webkit-box-shadow: 10px -2px 33px -3px #000000;
+    box-shadow: 10px -2px 33px -3px #000000;
+    font-family: "Nunito", serif;
+    font-size: 0.7em;
+    vertical-align: middle;
+    font-style: italic;
+    border-radius: 0.5em;
+    border: 0;
+    background-color: rgb(235, 235, 235);
+    opacity: 0.9;
+  }
+
+  input:hover,
+  input:hover::placeholder {
+    background-color: rgb(167, 166, 166);
+    color: rgb(235, 235, 235);
+  }
+
+  .formRow {
+    margin-bottom: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #submit, #logout {
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+    rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Nunito", serif;
+    height: 2.7em;
+    width: fit-content;
+    list-style: none;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    touch-action: manipulation;
+    white-space: nowrap;
+    margin-top: 0.7em;
+    margin-right: 1.5em;
+    margin-bottom: 2em;
+    font-size: 0.9em;
+  }
+
+  #submit {
+    background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  }
+
+  #logout {
+    background: rgb(209, 59, 59);
+    background: radial-gradient(circle, rgba(209, 59, 59, 1) 0%, rgba(112, 96, 96, 1) 99%);
+  }
+
+  #checkmark:hover,
+  .uncompleted #trashcan:hover {
+    background-color: grey;
+    color: rgb(235, 235, 235);
+  }
+
+  .completed #trashcan:hover {
+    background-color: rgb(235, 235, 235);
+    color: rgb(97, 97, 97);
+  }
+
+  .edit {
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    background: rgb(184, 174, 238);
+    background: linear-gradient(90deg, rgba(184, 174, 238, 1) 0%, rgba(148, 227, 233, 1) 99%);
+    border: 0;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+    rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+    color: black;
+    cursor: pointer;
+    font-family: "Nunito", serif;
+    height: 1.5em;
+    width: fit-content;
+    list-style: none;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    touch-action: manipulation;
+    white-space: nowrap;
+    font-size: 0.9em;
+  }
+
+}

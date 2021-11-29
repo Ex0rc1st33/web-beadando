@@ -11,5 +11,6 @@ public class FormData {
 
     private String title;
     private String description;
+    private String username;
 
 }

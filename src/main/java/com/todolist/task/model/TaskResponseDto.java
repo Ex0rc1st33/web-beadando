@@ -7,13 +7,12 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class TaskDto {
+public class TaskResponseDto {
 
     private final Long id;
     private final String title;
     private final String description;
     private final String creationDate;
     private final Boolean isDone;
-    private final String username;
 
 }

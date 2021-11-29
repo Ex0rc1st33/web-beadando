@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+
+button:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.login, .register {
+
+  h2 {
+    text-align: center;
+  }
+
+  input {
+    margin-left: 2em;
+    padding: 0.2em 0.5em;
+    height: 2em;
+    min-width: 20em;
+    -webkit-box-shadow: 10px -2px 33px -3px #000000;
+    box-shadow: 10px -2px 33px -3px #000000;
+    font-family: "Nunito", serif;
+    font-size: 0.7em;
+    font-style: italic;
+    border-radius: 0.5em;
+    border: 0;
+    background-color: rgb(235, 235, 235);
+    opacity: 0.9;
+  }
+
+  .formRow {
+    margin-bottom: 0.6em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #submit, #register, #switchToRegister {
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    border-radius: 6px;
+    background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+    rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Nunito", serif;
+    height: 2.7em;
+    width: 6em;
+    list-style: none;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    touch-action: manipulation;
+    white-space: nowrap;
+    margin-top: 1em;
+    font-size: 0.9em;
+  }
+
+  .register {
+    margin-left: 2em;
+  }
+
+  span {
+    width: fit-content;
+  }
+
+}
