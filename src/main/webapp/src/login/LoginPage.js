@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {Helmet} from "react-helmet";
-import {load} from '../redux/UserSlice';
-import {useDispatch} from "react-redux";
 
 export default function LoginPage(props) {
 
-    const dispatch = useDispatch()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -18,8 +15,7 @@ export default function LoginPage(props) {
                 username: username,
                 password: password
             }
-        }).then((response) => {
-            dispatch(load(response.data));
+        }).then(() => {
             props.history.push("/home");
         }).catch(() => {
             alert("Unsuccessful login!");
@@ -63,7 +59,8 @@ export default function LoginPage(props) {
                 </div>
                 <span>
                     <button type="submit" id="submit">Login</button>
-                    <button onClick={handleSwitchToRegister} id="switchToRegister" className="register">Register</button>
+                    <button onClick={handleSwitchToRegister} id="switchToRegister"
+                            className="register">Register</button>
                 </span>
             </form>
         </div>

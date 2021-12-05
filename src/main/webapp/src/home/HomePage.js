@@ -1,27 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Helmet} from "react-helmet";
-import {useDispatch, useSelector} from "react-redux";
-import {unload, userToken} from "../redux/UserSlice";
+import Modal from 'react-awesome-modal';
 
 function HomePage(props) {
 
-    const token = useSelector(userToken);
     const [user, setUser] = useState({});
-    const dispatch = useDispatch();
     const [selectedId, setSelectedId] = useState(0);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [completedTasks, setCompletedTasks] = useState([]);
     const [incompleteTasks, setIncompleteTasks] = useState([]);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     useEffect(() => {
         axios({
             'method': 'GET',
-            'url': `${process.env.hostUrl || 'http://localhost:8080'}/api/me`,
-            'headers': {
-                'Authorization': 'Bearer ' + token
-            }
+            'url': `${process.env.hostUrl || 'http://localhost:8080'}/api/me`
         }).then((res) => {
             setUser(res.data);
             axios({
@@ -68,7 +63,15 @@ function HomePage(props) {
                 }
                 setCompletedTasks(completed);
                 setIncompleteTasks(incomplete);
+            }).catch((exception) => {
+                if (exception.response.status === 500) {
+                    handleError();
+                }
             });
+        }).catch((exception) => {
+            if (exception.response.status === 500) {
+                handleError();
+            }
         });
     }, []);
 
@@ -101,9 +104,12 @@ function HomePage(props) {
                         </th>
                     </tr>,
                     ...incompleteTasks
-                ])
+                ]);
+            }).catch((exception) => {
+                if (exception.response.status === 500) {
+                    handleError();
+                }
             });
-            document.getElementById("submit").innerText = "Create new task";
             event.preventDefault();
         } else if (document.getElementById("submit").innerText === "Edit task") {
             axios({
@@ -117,8 +123,13 @@ function HomePage(props) {
                     isDone: false,
                     username: user.username
                 }
+            }).then(() => {
+                window.location.reload(true);
+            }).catch((exception) => {
+                if (exception.response.status === 500) {
+                    handleError();
+                }
             });
-            window.location.reload(true);
         }
     }
 
@@ -134,8 +145,13 @@ function HomePage(props) {
                 isDone: null,
                 username: username
             }
+        }).then(() => {
+            window.location.reload(true);
+        }).catch((exception) => {
+            if (exception.response.status === 500) {
+                handleError();
+            }
         });
-        window.location.reload(true);
     }
 
     function handleDone(task) {
@@ -150,8 +166,13 @@ function HomePage(props) {
                 isDone: true,
                 username: user.username
             }
+        }).then(() => {
+            window.location.reload(true);
+        }).catch((exception) => {
+            if (exception.response.status === 500) {
+                handleError();
+            }
         });
-        window.location.reload(true);
     }
 
     function handleHoverEnter(index) {
@@ -176,19 +197,41 @@ function HomePage(props) {
             'method': 'POST',
             'url': `${process.env.hostUrl || 'http://localhost:8080'}/api/delete_all`,
             'data': username
+        }).then(() => {
+            window.location.reload(true);
+        }).catch((exception) => {
+            if (exception.response.status === 500) {
+                handleError();
+            }
         });
-        window.location.reload(true);
     }
 
     function handleLogout() {
-        dispatch(unload);
         axios({
             'method': 'GET',
             'url': `${process.env.hostUrl || 'http://localhost:8080'}/api/logout`
         }).then((response) => {
             alert(response.data);
+            props.history.push("/login");
         });
-        props.history.push("/login");
+    }
+
+    function handleError() {
+        setIsPopupVisible(true);
+    }
+
+    function hidePopup() {
+        setIsPopupVisible(false);
+    }
+
+    function handleRefresh() {
+        axios({
+            'method': 'GET',
+            'url': `${process.env.hostUrl || 'http://localhost:8080'}/api/refresh`
+        }).then(() => {
+            hidePopup();
+            window.location.reload(true);
+        });
     }
 
     return (
@@ -224,6 +267,15 @@ function HomePage(props) {
                     </div>
                     <button type="submit" id="submit">Create new task</button>
                 </form>
+                <Modal visible={isPopupVisible} width="400" height="300" effect="fadeInUp" onClickAway={hidePopup}>
+                    <div className="popup">
+                        <div className="message">Session expired! Want to extend it or logout now?</div>
+                        <div className="cont">
+                            <button id="popup_refresh" onClick={handleRefresh}>Refresh token</button>
+                            <button id="popup_logout" onClick={handleLogout}>Logout</button>
+                        </div>
+                    </div>
+                </Modal>
                 <table className="uncompleted">
                     <thead>
                     <tr>

@@ -16,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -54,14 +56,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto whoAmI(String username) {
-        User user = userRepository.findByUsername(username);
-        return UserResponseDto.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .roles(user.getRoles())
-                .build();
+    public UserResponseDto whoAmI(String token) {
+        if (validateToken(token)) {
+            User user = userRepository.findByUsername(jwtTokenProvider.getUsername(token));
+            return UserResponseDto.builder()
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .email(user.getEmail())
+                    .roles(user.getRoles())
+                    .build();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean validateToken(String token) {
+        return jwtTokenProvider.validateToken(token);
+    }
+
+    @Override
+    public String refresh(String username) {
+        return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
     }
 
     @Override
