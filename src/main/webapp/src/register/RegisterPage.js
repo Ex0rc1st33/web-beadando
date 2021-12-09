@@ -10,6 +10,10 @@ export default function RegisterPage(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     function handleSubmit(event) {
+        if (password !== confirmPassword) {
+            alert("Unsuccessful registration!");
+            return;
+        }
         axios({
             'method': 'POST',
             'url': `${process.env.hostUrl || 'http://localhost:8080'}/api/register`,
